@@ -8,9 +8,25 @@ datasource db {
 }
 
 model User {
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now())
+  
+  invitation  Invitation?
+}
+
+model Invitation {
   id        Int      @id @default(autoincrement())
-  username  String   @unique
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  
+  userId    Int      @unique
+  
+  template  String
+  bride     String?
+  groom     String?
+  date      String?
+  message   String?
+  
+  user      User     @relation(fields: [userId], references: [id])
 }

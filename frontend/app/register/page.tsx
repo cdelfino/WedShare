@@ -1,71 +1,30 @@
-"use client";
-
-import { useState } from "react";
+import RegisterForm from "../components/RegisterForm";
 
 export default function RegisterPage() {
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const [msg, setMsg] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const res = await fetch("http://localhost:4000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-    setMsg(res.ok ? "Registro exitoso" : data.error || "Error");
-  };
-
   return (
-    <div className="p-10 max-w-sm mx-auto">
-      <h2 className="text-xl font-bold mb-4">Crear cuenta</h2>
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+      {/* Columna Izquierda: Contenido Promocional */}
+      <div className="flex-1 flex flex-col items-center justify-center p-8 bg-gray-50 text-gray-800">
+        <h1 className="text-3xl md:text-5xl font-bold text-center leading-tight mb-8 max-w-lg">
+          Crea tu cuenta y comienza a organizar tu boda con{" "}
+          <span className="text-purple-700">WedShare</span>.
+        </h1>
+        <div className="relative w-full max-w-md h-64 bg-gradient-to-br from-purple-200 to-purple-100 rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-6xl mb-4">💍</div>
+            <p className="text-purple-700 font-semibold">
+              Invitaciones digitales inteligentes
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input
-          name="username"
-          type="text"
-          placeholder="Nombre de usuario"
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-
-        <input
-          name="password"
-          type="password"
-          placeholder="Contraseña"
-          onChange={handleChange}
-          className="border p-2 rounded"
-          required
-        />
-
-        <button className="bg-green-600 text-white p-2 rounded">
-          Registrarse
-        </button>
-      </form>
-
-      <p className="mt-3">{msg}</p>
+      {/* Columna Derecha: Formulario de Registro */}
+      <div className="flex-1 flex items-center justify-center p-8 bg-white shadow-lg">
+        <div className="w-full max-w-md p-6 sm:p-8 rounded-lg text-center">
+          <RegisterForm showLinks={false} />
+        </div>
+      </div>
     </div>
   );
 }
